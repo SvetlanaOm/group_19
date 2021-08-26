@@ -1,0 +1,869 @@
+{
+	"info": {
+		"_postman_id": "24f9a3ec-caae-436c-ae1a-21938bc3ba0d",
+		"name": "group_19",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "HOMEWORK2",
+			"item": [
+				{
+					"name": "hw2_login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let jsonDATA = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"token\", jsonDATA.token);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "login",
+									"value": "SvetlanaOm",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://162.55.220.72:5005/login",
+							"protocol": "http",
+							"host": [
+								"162",
+								"55",
+								"220",
+								"72"
+							],
+							"port": "5005",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "user_info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var schema = {\r",
+									"    \"type\": \"object\",\r",
+									"    \"items\": [{\r",
+									"        type: \"object\",\r",
+									"        properties:{\r",
+									"         \"age\": {\r",
+									"            \"type\":\"number\"\r",
+									"             },\r",
+									"         \"salary\": {\r",
+									"             \"type\":\"number\"\r",
+									"             },\r",
+									"         \"name\": {\r",
+									"             \"type\":\"string\"\r",
+									"            }\r",
+									"        }\r",
+									"    }]\r",
+									"};\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"let salary_b = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"salary\", salary_b.start_qa_salary);\r",
+									"\r",
+									"let qa_salary_after_6_months = salary_b.start_qa_salary*2;\r",
+									"postman.setEnvironmentVariable(\"salary\", salary_b.start_qa_salary);\r",
+									"\r",
+									"pm.test (\"Check_salary\", function () {\r",
+									"    var salary_b = pm.response.json();\r",
+									"    pm.expect(salary_b.qa_salary_after_6_months).to.eql(qa_salary_after_6_months);\r",
+									"});\r",
+									"\r",
+									"let qa_salary_after_12_months = salary_b.start_qa_salary*2.9;\r",
+									"\r",
+									"pm.test (\"Check_salary\", function () {\r",
+									"    var salary_b = pm.response.json();\r",
+									"    pm.expect(salary_b.qa_salary_after_12_months).to.eql(qa_salary_after_12_months);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"let u_salary_1_5_year = salary_b.start_qa_salary*4;\r",
+									"\r",
+									"pm.test (\"Check_salary\", function () {\r",
+									"   var salary_b = pm.response.json();\r",
+									"   pm.expect(salary_b.person.u_salary_1_5_year).to.eql(u_salary_1_5_year);\r",
+									"});\r",
+									"\r",
+									"let salary2 = JSON.parse(responseBody);\r",
+									"postman.setEnvironmentVariable(\"salary_1_5_year\", salary_b.person.u_salary_1_5_year);\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"age\": 35,\r\n\"salary\": 1000,\r\n\"name\": \"Svetlana\",\r\n\"auth_token\": \"/s34lfgbj/SvetlanaOm/jjd909/67949kjkWpqc1970123173748evny\" }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://162.55.220.72:5005/user_info",
+							"protocol": "http",
+							"host": [
+								"162",
+								"55",
+								"220",
+								"72"
+							],
+							"port": "5005",
+							"path": [
+								"user_info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "new_data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"  var schema = { \r",
+									"           \"type\" : \"object\", \r",
+									"        \"required\" : [\"name\", \"salary\", \"age\"], \r",
+									"        \"additionalProperties\": false, \r",
+									"        \"properties\" : { \r",
+									"        \"age\" : { \"type\" : \"number\"},  \r",
+									"            \"salary\" : { \"type\" : \"array\"}, \r",
+									"         \"name\" : { \"type\" : \"string\"}, \r",
+									"            \r",
+									"        }};\r",
+									"\r",
+									"   pm.test(\"Validate schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"let salary_b = JSON.parse(responseBody);\r",
+									"let salary3 = salary_b.salary[0]*2\r",
+									"\r",
+									"pm.test (\"Check_salary\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(parseInt(salary_b.salary[1])).to.eql(salary3);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"let salary4 = salary_b.salary[0]*3\r",
+									"pm.test (\"Check_salary\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect(parseInt(salary_b.salary[2])).to.eql(salary4);\r",
+									"});\r",
+									"\r",
+									"pm.test (\"Check_more_less\", function () {\r",
+									"    var jsonData = pm.response.json();\r",
+									"    pm.expect (parseInt(salary_b.salary[2])).to.be.above(parseInt(salary_b.salary[0]))    \r",
+									"    \r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "\"/s34lfgbj/SvetlanaOm/jjd909/79247kjkWpqc817None412832evny\"",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "age",
+									"value": "35",
+									"type": "text"
+								},
+								{
+									"key": "salary",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Svetlana",
+									"type": "text"
+								},
+								{
+									"key": "auth_token",
+									"value": "/s34lfgbj/SvetlanaOm/jjd909/67949kjkWpqc1970123173748evny",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://162.55.220.72:5005/new_data",
+							"protocol": "http",
+							"host": [
+								"162",
+								"55",
+								"220",
+								"72"
+							],
+							"port": "5005",
+							"path": [
+								"new_data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "4.test_pet_info2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var schema = {\r",
+									"          \"type\" : \"object\",\r",
+									"    \"required\" : [\"daily_food\", \"daily_sleep\", \"age\", \"name\"], \r",
+									"        \"additionalProperties\": false, \r",
+									"        \"properties\" : { \r",
+									"        \"age\" : { \"type\" : \"number\"},  \r",
+									"        \"daily_food\" : { \"type\" : \"number\"}, \r",
+									"        \"daily_sleep\" : {\"type\" : \"number\"},\r",
+									"        \"name\" : { \"type\" : \"string\"}, \r",
+									"            \r",
+									"        }\r",
+									"};\r",
+									"\r",
+									"\r",
+									"pm.test(\"Validate schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"var jsonData = pm.response.json();\r",
+									"pm.test(\"check_daily_food\", function () {\r",
+									"    pm.expect(jsonData.daily_food).to.eql(request.data.weight*0.012);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"check_daily_sleep\", function () {\r",
+									"    pm.expect(jsonData.daily_sleep).to.eql(request.data.weight*2.5);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "age",
+									"value": "35",
+									"type": "text"
+								},
+								{
+									"key": "weight",
+									"value": "53",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "Svetlana",
+									"type": "text"
+								},
+								{
+									"key": "auth_token",
+									"value": "\"/s34lfgbj/SvetlanaOm/jjd909/79247kjkWpqc817None412832evny\"",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://162.55.220.72:5005/test_pet_info",
+							"protocol": "http",
+							"host": [
+								"162",
+								"55",
+								"220",
+								"72"
+							],
+							"port": "5005",
+							"path": [
+								"test_pet_info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "5.get_test_user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var schema ={\r",
+									"    \"$schema\": \"http://json-schema.org/draft-07/schema\",\r",
+									"    \"$id\": \"http://example.com/example.json\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"title\": \"The root schema\",\r",
+									"    \"description\": \"The root schema comprises the entire JSON document.\",\r",
+									"    \"default\": {},\r",
+									"    \"examples\": [\r",
+									"        {\r",
+									"            \"age\": \"35\",\r",
+									"            \"family\": {\r",
+									"                \"children\": [\r",
+									"                    [\r",
+									"                        \"Alex\",\r",
+									"                        24\r",
+									"                    ],\r",
+									"                    [\r",
+									"                        \"Kate\",\r",
+									"                        12\r",
+									"                    ]\r",
+									"                ],\r",
+									"                \"u_salary_1_5_year\": 4000\r",
+									"            },\r",
+									"            \"name\": \"Svetlana\",\r",
+									"            \"salary\": 1000\r",
+									"        }\r",
+									"    ],\r",
+									"    \"required\": [\r",
+									"        \"age\",\r",
+									"        \"family\",\r",
+									"        \"name\",\r",
+									"        \"salary\"\r",
+									"    ],\r",
+									"    \"properties\": {\r",
+									"        \"age\": {\r",
+									"            \"$id\": \"#/properties/age\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"title\": \"The age schema\",\r",
+									"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"            \"default\": \"\",\r",
+									"            \"examples\": [\r",
+									"                \"35\"\r",
+									"            ]\r",
+									"        },\r",
+									"        \"family\": {\r",
+									"            \"$id\": \"#/properties/family\",\r",
+									"            \"type\": \"object\",\r",
+									"            \"title\": \"The family schema\",\r",
+									"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"            \"default\": {},\r",
+									"            \"examples\": [\r",
+									"                {\r",
+									"                    \"children\": [\r",
+									"                        [\r",
+									"                            \"Alex\",\r",
+									"                            24\r",
+									"                        ],\r",
+									"                        [\r",
+									"                            \"Kate\",\r",
+									"                            12\r",
+									"                        ]\r",
+									"                    ],\r",
+									"                    \"u_salary_1_5_year\": 4000\r",
+									"                }\r",
+									"            ],\r",
+									"            \"required\": [\r",
+									"                \"children\",\r",
+									"                \"u_salary_1_5_year\"\r",
+									"            ],\r",
+									"            \"properties\": {\r",
+									"                \"children\": {\r",
+									"                    \"$id\": \"#/properties/family/properties/children\",\r",
+									"                    \"type\": \"array\",\r",
+									"                    \"title\": \"The children schema\",\r",
+									"                    \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"                    \"default\": [],\r",
+									"                    \"examples\": [\r",
+									"                        [\r",
+									"                            [\r",
+									"                                \"Alex\",\r",
+									"                                24\r",
+									"                            ],\r",
+									"                            [\r",
+									"                                \"Kate\",\r",
+									"                                12\r",
+									"                            ]\r",
+									"                        ]\r",
+									"                    ],\r",
+									"                    \"additionalItems\": true,\r",
+									"                    \"items\": {\r",
+									"                        \"$id\": \"#/properties/family/properties/children/items\",\r",
+									"                        \"anyOf\": [\r",
+									"                            {\r",
+									"                                \"$id\": \"#/properties/family/properties/children/items/anyOf/0\",\r",
+									"                                \"type\": \"array\",\r",
+									"                                \"title\": \"The first anyOf schema\",\r",
+									"                                \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"                                \"default\": [],\r",
+									"                                \"examples\": [\r",
+									"                                    [\r",
+									"                                        \"Alex\",\r",
+									"                                        24\r",
+									"                                    ]\r",
+									"                                ],\r",
+									"                                \"additionalItems\": true,\r",
+									"                                \"items\": {\r",
+									"                                    \"$id\": \"#/properties/family/properties/children/items/anyOf/0/items\",\r",
+									"                                    \"anyOf\": [\r",
+									"                                        {\r",
+									"                                            \"$id\": \"#/properties/family/properties/children/items/anyOf/0/items/anyOf/0\",\r",
+									"                                            \"type\": \"string\",\r",
+									"                                            \"title\": \"The first anyOf schema\",\r",
+									"                                            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"                                            \"default\": \"\",\r",
+									"                                            \"examples\": [\r",
+									"                                                \"Alex\"\r",
+									"                                            ]\r",
+									"                                        },\r",
+									"                                        {\r",
+									"                                            \"$id\": \"#/properties/family/properties/children/items/anyOf/0/items/anyOf/1\",\r",
+									"                                            \"type\": \"integer\",\r",
+									"                                            \"title\": \"The second anyOf schema\",\r",
+									"                                            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"                                            \"default\": 0,\r",
+									"                                            \"examples\": [\r",
+									"                                                24\r",
+									"                                            ]\r",
+									"                                        }\r",
+									"                                    ]\r",
+									"                                }\r",
+									"                            },\r",
+									"                            {\r",
+									"                                \"$id\": \"#/properties/family/properties/children/items/anyOf/1\",\r",
+									"                                \"type\": \"array\",\r",
+									"                                \"title\": \"The second anyOf schema\",\r",
+									"                                \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"                                \"default\": [],\r",
+									"                                \"examples\": [\r",
+									"                                    [\r",
+									"                                        \"Kate\",\r",
+									"                                        12\r",
+									"                                    ]\r",
+									"                                ],\r",
+									"                                \"additionalItems\": true,\r",
+									"                                \"items\": {\r",
+									"                                    \"$id\": \"#/properties/family/properties/children/items/anyOf/1/items\",\r",
+									"                                    \"anyOf\": [\r",
+									"                                        {\r",
+									"                                            \"$id\": \"#/properties/family/properties/children/items/anyOf/1/items/anyOf/0\",\r",
+									"                                            \"type\": \"string\",\r",
+									"                                            \"title\": \"The first anyOf schema\",\r",
+									"                                            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"                                            \"default\": \"\",\r",
+									"                                            \"examples\": [\r",
+									"                                                \"Kate\"\r",
+									"                                            ]\r",
+									"                                        },\r",
+									"                                        {\r",
+									"                                            \"$id\": \"#/properties/family/properties/children/items/anyOf/1/items/anyOf/1\",\r",
+									"                                            \"type\": \"integer\",\r",
+									"                                            \"title\": \"The second anyOf schema\",\r",
+									"                                            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"                                            \"default\": 0,\r",
+									"                                            \"examples\": [\r",
+									"                                                12\r",
+									"                                            ]\r",
+									"                                        }\r",
+									"                                    ]\r",
+									"                                }\r",
+									"                            }\r",
+									"                        ]\r",
+									"                    }\r",
+									"                },\r",
+									"                \"u_salary_1_5_year\": {\r",
+									"                    \"$id\": \"#/properties/family/properties/u_salary_1_5_year\",\r",
+									"                    \"type\": \"integer\",\r",
+									"                    \"title\": \"The u_salary_1_5_year schema\",\r",
+									"                    \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"                    \"default\": 0,\r",
+									"                    \"examples\": [\r",
+									"                        4000\r",
+									"                    ]\r",
+									"                }\r",
+									"            },\r",
+									"            \"additionalProperties\": true\r",
+									"        },\r",
+									"        \"name\": {\r",
+									"            \"$id\": \"#/properties/name\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"title\": \"The name schema\",\r",
+									"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"            \"default\": \"\",\r",
+									"            \"examples\": [\r",
+									"                \"Svetlana\"\r",
+									"            ]\r",
+									"        },\r",
+									"        \"salary\": {\r",
+									"            \"$id\": \"#/properties/salary\",\r",
+									"            \"type\": \"integer\",\r",
+									"            \"title\": \"The salary schema\",\r",
+									"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"            \"default\": 0,\r",
+									"            \"examples\": [\r",
+									"                1000\r",
+									"            ]\r",
+									"        }\r",
+									"    },\r",
+									"    \"additionalProperties\": true\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Validate schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									"\r",
+									"let jsonDATA = JSON.parse(responseBody);\r",
+									"\r",
+									"postman.setEnvironmentVariable(\"name\", jsonDATA.name);\r",
+									"var jsonData = JSON.parse(responseBody);\r",
+									"\r",
+									"\r",
+									"pm.test (\"Check_name\", function () {\r",
+									"  pm.expect(jsonData.name).to.eql(pm.environment.get(\"name\"))\r",
+									"});\r",
+									"\r",
+									"pm.test (\"Check_age\", function () {\r",
+									"  pm.expect(jsonData.age).to.eql(request.data.age);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "\"/s34lfgbj/SvetlanaOm/jjd909/79247kjkWpqc817None412832evny\"",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "age",
+									"value": "35",
+									"type": "text"
+								},
+								{
+									"key": "salary",
+									"value": "1000",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "{{name}}",
+									"type": "text"
+								},
+								{
+									"key": "auth_token",
+									"value": "\"/s34lfgbj/SvetlanaOm/jjd909/79247kjkWpqc817None412832evny\"",
+									"type": "text"
+								}
+							],
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://162.55.220.72:5005/get_test_user",
+							"protocol": "http",
+							"host": [
+								"162",
+								"55",
+								"220",
+								"72"
+							],
+							"port": "5005",
+							"path": [
+								"get_test_user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "6.currency",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonDATA = pm.response.json();\r",
+									"\r",
+									"var i=jsonDATA.length\r",
+									"function getRandomInt(i) {\r",
+									"    return Math.floor(Math.random() * i);\r",
+									"}\r",
+									"pm.environment.set(\"curr_code\",jsonDATA[getRandomInt(i)].Cur_ID);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "auth_token",
+									"value": "\"/s34lfgbj/SvetlanaOm/jjd909/96426kjkWpqc853None353674evny\"",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://162.55.220.72:5005/currency",
+							"protocol": "http",
+							"host": [
+								"162",
+								"55",
+								"220",
+								"72"
+							],
+							"port": "5005",
+							"path": [
+								"currency"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "7.curr_byn",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"var schema = {\r",
+									"\r",
+									"    \"$schema\": \"http://json-schema.org/draft-07/schema\",\r",
+									"    \"$id\": \"http://example.com/example.json\",\r",
+									"    \"type\": \"object\",\r",
+									"    \"title\": \"The root schema\",\r",
+									"    \"description\": \"The root schema comprises the entire JSON document.\",\r",
+									"    \"default\": {},\r",
+									"    \"examples\": [\r",
+									"        {\r",
+									"            \"Cur_Abbreviation\": \"KES\",\r",
+									"            \"Cur_ID\": 321,\r",
+									"            \"Cur_Name\": \"Кенийских шиллингов\",\r",
+									"            \"Cur_OfficialRate\": 2.3517,\r",
+									"            \"Cur_Scale\": 100,\r",
+									"            \"Date\": \"2021-06-29T00:00:00\"\r",
+									"        }\r",
+									"    ],\r",
+									"    \"required\": [\r",
+									"        \"Cur_Abbreviation\",\r",
+									"        \"Cur_ID\",\r",
+									"        \"Cur_Name\",\r",
+									"        \"Cur_OfficialRate\",\r",
+									"        \"Cur_Scale\",\r",
+									"        \"Date\"\r",
+									"    ],\r",
+									"    \"properties\": {\r",
+									"        \"Cur_Abbreviation\": {\r",
+									"            \"$id\": \"#/properties/Cur_Abbreviation\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"title\": \"The Cur_Abbreviation schema\",\r",
+									"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"            \"default\": \"\",\r",
+									"            \"examples\": [\r",
+									"                \"KES\"\r",
+									"            ]\r",
+									"        },\r",
+									"        \"Cur_ID\": {\r",
+									"            \"$id\": \"#/properties/Cur_ID\",\r",
+									"            \"type\": \"integer\",\r",
+									"            \"title\": \"The Cur_ID schema\",\r",
+									"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"            \"default\": 0,\r",
+									"            \"examples\": [\r",
+									"                321\r",
+									"            ]\r",
+									"        },\r",
+									"        \"Cur_Name\": {\r",
+									"            \"$id\": \"#/properties/Cur_Name\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"title\": \"The Cur_Name schema\",\r",
+									"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"            \"default\": \"\",\r",
+									"            \"examples\": [\r",
+									"                \"Кенийских шиллингов\"\r",
+									"            ]\r",
+									"        },\r",
+									"        \"Cur_OfficialRate\": {\r",
+									"            \"$id\": \"#/properties/Cur_OfficialRate\",\r",
+									"            \"type\": \"number\",\r",
+									"            \"title\": \"The Cur_OfficialRate schema\",\r",
+									"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"            \"default\": 0.0,\r",
+									"            \"examples\": [\r",
+									"                2.3517\r",
+									"            ]\r",
+									"        },\r",
+									"        \"Cur_Scale\": {\r",
+									"            \"$id\": \"#/properties/Cur_Scale\",\r",
+									"            \"type\": \"integer\",\r",
+									"            \"title\": \"The Cur_Scale schema\",\r",
+									"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"            \"default\": 0,\r",
+									"            \"examples\": [\r",
+									"                100\r",
+									"            ]\r",
+									"        },\r",
+									"        \"Date\": {\r",
+									"            \"$id\": \"#/properties/Date\",\r",
+									"            \"type\": \"string\",\r",
+									"            \"title\": \"The Date schema\",\r",
+									"            \"description\": \"An explanation about the purpose of this instance.\",\r",
+									"            \"default\": \"\",\r",
+									"            \"examples\": [\r",
+									"                \"2021-06-29T00:00:00\"\r",
+									"            ]\r",
+									"        }\r",
+									"    },\r",
+									"    \"additionalProperties\": true\r",
+									"}\r",
+									"\r",
+									"pm.test(\"Validate schema\", () => {\r",
+									"    pm.response.to.have.jsonSchema(schema);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "\"/s34lfgbj/SvetlanaOm/jjd909/79247kjkWpqc817None412832evny\"",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "auth_token",
+									"value": "\"/s34lfgbj/SvetlanaOm/jjd909/96426kjkWpqc853None353674evny\"",
+									"type": "text"
+								},
+								{
+									"key": "curr_code",
+									"value": "{{curr_code}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://162.55.220.72:5005/curr_byn",
+							"protocol": "http",
+							"host": [
+								"162",
+								"55",
+								"220",
+								"72"
+							],
+							"port": "5005",
+							"path": [
+								"curr_byn"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
